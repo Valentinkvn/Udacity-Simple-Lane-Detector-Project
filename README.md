@@ -6,11 +6,11 @@
 
 The goal of this project is to generate simple lines from the code where we have lanes on the road. 
 The method used here is a simple image processing which has the following steps:
-    - convert the image from color to gray image
-    - apply Canny Method to determine the edges
-    - trim the image regarding a region of interest which is a trapeze
-    - apply Hough Transform to determine the lines
-    - use a weight method to draw the lines on the images
+- convert the image from color to gray image
+- apply Canny Method to determine the edges
+- trim the image regarding a region of interest which is a trapeze
+- apply Hough Transform to determine the lines
+- use a weight method to draw the lines on the images
     
 [//]: # (Image References)
 
