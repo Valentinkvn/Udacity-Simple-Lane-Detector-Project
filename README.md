@@ -1,61 +1,62 @@
-<<<<<<< HEAD
 # **Finding Lane Lines on the Road** 
-[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
-<img src="examples/laneLines_thirdPass.jpg" width="480" alt="Combined Image" />
-
-Overview
 ---
 
-When we drive, we use our eyes to decide where to go.  The lines on the road that show us where the lanes are act as our constant reference for where to steer the vehicle.  Naturally, one of the first things we would like to do in developing a self-driving car is to automatically detect lane lines using an algorithm.
+**Finding Lane Lines on the Road**
 
-In this project you will detect lane lines in images using Python and OpenCV.  OpenCV means "Open-Source Computer Vision", which is a package that has many useful tools for analyzing images.  
+The goal of this project is to generate simple lines from the code where we have lanes on the road. 
+The method used here is a simple image processing which has the following steps:
+    - convert the image from color to gray image
+    - apply Canny Method to determine the edges
+    - trim the image regarding a region of interest which is a trapeze
+    - apply Hough Transform to determine the lines
+    - use a weight method to draw the lines on the images
+    
+[//]: # (Image References)
 
-To complete the project, two files will be submitted: a file containing project code and a file containing a brief write up explaining your solution. We have included template files to be used both for the [code](https://github.com/udacity/CarND-LaneLines-P1/blob/master/P1.ipynb) and the [writeup](https://github.com/udacity/CarND-LaneLines-P1/blob/master/writeup_template.md).The code file is called P1.ipynb and the writeup template is writeup_template.md 
-
-To meet specifications in the project, take a look at the requirements in the [project rubric](https://review.udacity.com/#!/rubrics/322/view)
-
-
-Creating a Great Writeup
----
-For this project, a great writeup should provide a detailed response to the "Reflection" section of the [project rubric](https://review.udacity.com/#!/rubrics/322/view). There are three parts to the reflection:
-
-1. Describe the pipeline
-
-2. Identify any shortcomings
-
-3. Suggest possible improvements
-
-We encourage using images in your writeup to demonstrate how your pipeline works.  
-
-All that said, please be concise!  We're not looking for you to write a book here: just a brief description.
-
-You're not required to use markdown for your writeup.  If you use another method please just submit a pdf of your writeup. Here is a link to a [writeup template file](https://github.com/udacity/CarND-LaneLines-P1/blob/master/writeup_template.md). 
-
-
-The Project
+[image1]: ./examples/grayImage.jpg "Grayscale"
+[image2]: ./examples/cannyImage.jpg "Canny"
+[image3]: ./examples/trimmedImage.jpg "Trim"
+[image4]: ./examples/houghImage.jpg "Hough"
+[image5]: ./examples/resultImage.jpg "Result"
 ---
 
-## If you have already installed the [CarND Term1 Starter Kit](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) you should be good to go!   If not, you should install the starter kit to get started on this project. ##
+### Reflection
 
-**Step 1:** Set up the [CarND Term1 Starter Kit](https://classroom.udacity.com/nanodegrees/nd013/parts/fbf77062-5703-404e-b60c-95b78b2f3f9e/modules/83ec35ee-1e02-48a5-bdb7-d244bd47c2dc/lessons/8c82408b-a217-4d09-b81d-1bda4c6380ef/concepts/4f1870e0-3849-43e4-b670-12e6f2d4b7a7) if you haven't already.
+#### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
 
-**Step 2:** Open the code in a Jupyter Notebook
+My pipeline consisted of 5 steps. 
+- the first one was to convert the image to grayscale, using openCV cvtColor.
+<p align="center">
+  <img src="/examples/grayImage.jpg">
+</p>
+- the second one was to apply Canny Transform to the grayscale image, using Canny function from openCV library with the values for the threshold [50, 150]
+<p align="center">
+  <img src="/examples/cannyImage.jpg">
+</p>
+- the third step was to determine a region of interest, which is a trapeze with the big base at the bottom of the image and the little base around the middle of the image.
+<p align="center">
+  <img src="/examples/trimmedImage.jpg">
+</p>
+- the fourth step was the most important because here I called the Hough Transform and then, after that, the method draw_lines was used. That method was used in the following case: having a set of points which are the points of the lines edges, apply a polyfit method (a linear regression - least squares method) to determine the line which "intersects" all of those points.
+<p align="center">
+  <img src="/examples/houghImage.jpg">
+</p>
+- the fifth and the last step was to put the lines determined previously on the initial image.
+<p align="center">
+  <img src="/examples/resultImage.jpg">
+</p>
 
-You will complete the project code in a Jupyter notebook.  If you are unfamiliar with Jupyter Notebooks, check out <A HREF="https://www.packtpub.com/books/content/basics-jupyter-notebook-and-python" target="_blank">Cyrille Rossant's Basics of Jupyter Notebook and Python</A> to get started.
 
-Jupyter is an Ipython notebook where you can run blocks of code and see results interactively.  All the code for this project is contained in a Jupyter notebook. To start Jupyter in your browser, use terminal to navigate to your project directory and then run the following command at the terminal prompt (be sure you've activated your Python 3 carnd-term1 environment as described in the [CarND Term1 Starter Kit](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) installation instructions!):
 
-`> jupyter notebook`
+#### 2. Potential shortcomings with the pipeline
 
-A browser window will appear showing the contents of the current directory.  Click on the file called "P1.ipynb".  Another browser window will appear displaying the notebook.  Follow the instructions in the notebook to complete the project.  
+One potential shortcoming would be what would happen when we have a curvature in the lanes because there is a posibility that our region of interest will trim a lot from the meaningful part of the image, where we have the information about the lanes lines.
+Another shortcoming is that the algorithm is sensitive to the modification of the luminosity.
 
-**Step 3:** Complete the project and submit both the Ipython notebook and the project writeup
 
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
 
-=======
-# Computer-Vision
-Computer Vision apps from Udacity training program
->>>>>>> c9af629be6d0e6655fba9a455c15be337666616a
+#### 3. Possible improvements to the pipeline
+
+A possible improvement would be to dynamically detect the lanes with a method as sliding window. That method will give us the opportunity to detect the lanes even if we have a curvature in the road.
+
