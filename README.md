@@ -28,23 +28,23 @@ The method used here is a simple image processing which has the following steps:
 My pipeline consisted of 5 steps. 
 - the first one was to convert the image to grayscale, using openCV cvtColor.
 <p align="center">
-  <img src="/examples/grayImage.jpg">
+  <img src="./examples/grayImage.JPG">
 </p>
 - the second one was to apply Canny Transform to the grayscale image, using Canny function from openCV library with the values for the threshold [50, 150]
 <p align="center">
-  <img src="/examples/cannyImage.jpg">
+  <img src="./examples/cannyImage.JPG">
 </p>
 - the third step was to determine a region of interest, which is a trapeze with the big base at the bottom of the image and the little base around the middle of the image.
 <p align="center">
-  <img src="/examples/trimmedImage.jpg">
+  <img src="./examples/trimmedImage.JPG">
 </p>
 - the fourth step was the most important because here I called the Hough Transform and then, after that, the method draw_lines was used. That method was used in the following case: having a set of points which are the points of the lines edges, apply a polyfit method (a linear regression - least squares method) to determine the line which "intersects" all of those points.
 <p align="center">
-  <img src="/examples/houghImage.jpg">
+  <img src="./examples/houghImage.JPG">
 </p>
 - the fifth and the last step was to put the lines determined previously on the initial image.
 <p align="center">
-  <img src="/examples/resultImage.jpg">
+  <img src="./examples/resultImage.JPG">
 </p>
 
 
